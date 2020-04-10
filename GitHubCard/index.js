@@ -2,13 +2,17 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-axios.get('https://api.github.com/users/maryjwaters7')
-  .then(response => {
-      console.log(response)
-  })
-  .catch(error => {
-    console.log('error:', err);
-  })
+// const gitObj = axios.get('https://api.github.com/users/maryjwaters7')
+//   .then(response => {
+//       const gitData = (response.data)
+//       // console.log(gitData)
+//       return(gitData)
+//   })
+//   .catch(error => {
+//     console.log('error:', err);
+//   })
+
+
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -50,8 +54,77 @@ const followersArray = [];
     <p>Bio: {users bio}</p>
   </div>
 </div>
-
 */
+function make(selector) {
+  return document.createElement(selector);
+};
+
+const entry = document.querySelector('.cards');
+
+const createCard = ({login, avatar_url, html_url, name, location, bio, followers, followers_url, following, following_url}) => {
+  const card = make('div')
+  const cardImg = make('img')
+  const cardInfo = make('div')
+  const cardName = make('h3')
+  const userName = make('p')
+  const loca = make('p')
+  const profile = make('p', 'a')
+  const cardFollowers = make('p')
+  const cardFollowing = make('p')
+  const cardBio = make('p')
+  console.log(profile)
+  //structure
+  card.appendChild(cardImg)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(cardName)
+  cardInfo.appendChild(userName)
+  cardInfo.appendChild(loca)
+  cardInfo.appendChild(profile)
+  cardInfo.appendChild(cardFollowers)
+  cardInfo.appendChild(cardFollowing)
+  cardInfo.appendChild(cardBio)
+
+  //classes
+  card.classList.add('card')
+  cardInfo.classList.add('card-info')
+  cardName.classList.add('name')
+  userName.classList.add('username')
+ 
+  
+
+  //content
+  cardImg.src = avatar_url
+  cardName.textContent = `${name}`
+  userName.textContent = `${login}`
+  loca.textContent = `${location}`
+  profile.textContent = `Profile: ${html_url}`
+  profile.href = html_url
+  cardFollowers.textContent = `Followers: ${followers}`
+  cardFollowing.textContent = `Following: ${following}`
+  cardBio.textContent = `Bio: ${bio}`
+
+  return card
+};
+
+
+axios.get('https://api.github.com/users/maryjwaters7')
+  .then (
+    response => {
+      console.log(response);
+      const gitData = response.data;
+      console.log(gitData)
+      entry.appendChild(createCard(gitData));
+    }
+  )
+  .catch (
+    error => {
+      console.log(error)
+    }
+  )
+
+
+
+// ****
 
 /* List of LS Instructors Github username's: 
   tetondan
