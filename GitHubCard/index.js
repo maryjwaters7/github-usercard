@@ -35,7 +35,8 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['SandraCoburn', 'liamcox', 'jonush', 'msheets1983', 'code-dependent', 'tetondan',
+ 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -68,11 +69,12 @@ const createCard = ({login, avatar_url, html_url, name, location, bio, followers
   const cardName = make('h3')
   const userName = make('p')
   const loca = make('p')
-  const profile = make('p', 'a')
+  const profile = make('p')
+  const link = make ('a')
   const cardFollowers = make('p')
   const cardFollowing = make('p')
   const cardBio = make('p')
-  console.log(profile)
+  
   //structure
   card.appendChild(cardImg)
   card.appendChild(cardInfo)
@@ -97,8 +99,13 @@ const createCard = ({login, avatar_url, html_url, name, location, bio, followers
   cardName.textContent = `${name}`
   userName.textContent = `${login}`
   loca.textContent = `${location}`
-  profile.textContent = `Profile: ${html_url}`
-  profile.href = html_url
+  profile.textContent = `Profile: `
+  console.log(profile)
+  profile.appendChild(link)
+  link.href = html_url
+  link.text = `View`
+  console.log(link)
+  console.log(profile)
   cardFollowers.textContent = `Followers: ${followers}`
   cardFollowing.textContent = `Following: ${following}`
   cardBio.textContent = `Bio: ${bio}`
@@ -133,3 +140,19 @@ axios.get('https://api.github.com/users/maryjwaters7')
   luishrd
   bigknell
 */
+function getArray(array) {
+  for (let i = 0; i < array.length; i++) {
+    axios.get(`https://api.github.com/users/${array[i]}`)
+      .then (
+        response => {
+          const newGitData = response.data;
+    
+          entry.appendChild(createCard(newGitData));
+        })
+      .catch (
+        error => {
+          console.log(error)
+        })
+  }}
+
+getArray(followersArray);
