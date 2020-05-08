@@ -35,7 +35,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = ['SandraCoburn', 'liamcox', 'jonush', 'msheets1983', 'code-dependent', 'tetondan',
+const followersArray = ['alphaseinor', 'tetondan',
  'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
@@ -74,10 +74,14 @@ const createCard = ({login, avatar_url, html_url, name, location, bio, followers
   const cardFollowers = make('p')
   const cardFollowing = make('p')
   const cardBio = make('p')
+  //Added
+  const contContain = make('div')
+  const cal = make('img')
   
   //structure
-  card.appendChild(cardImg)
-  card.appendChild(cardInfo)
+  card.appendChild(contContain)
+  contContain.appendChild(cardImg)
+  contContain.appendChild(cardInfo)
   cardInfo.appendChild(cardName)
   cardInfo.appendChild(userName)
   cardInfo.appendChild(loca)
@@ -85,14 +89,15 @@ const createCard = ({login, avatar_url, html_url, name, location, bio, followers
   cardInfo.appendChild(cardFollowers)
   cardInfo.appendChild(cardFollowing)
   cardInfo.appendChild(cardBio)
+  card.appendChild(cal)
 
   //classes
   card.classList.add('card')
   cardInfo.classList.add('card-info')
   cardName.classList.add('name')
   userName.classList.add('username')
- 
-  
+  //Added
+  contContain.classList.add('contContain')
 
   //content
   cardImg.src = avatar_url
@@ -109,6 +114,11 @@ const createCard = ({login, avatar_url, html_url, name, location, bio, followers
   cardFollowers.textContent = `Followers: ${followers}`
   cardFollowing.textContent = `Following: ${following}`
   cardBio.textContent = `Bio: ${bio}`
+  //Added
+  cal.setAttribute('alt', `${name}'s GitHub Activity Calendar`)
+  cal.src = `http://ghchart.rshah.org/${login}`  
+  cal.setAttribute('id', 'calImg')
+
 
   return card
 };
